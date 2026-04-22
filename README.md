@@ -30,7 +30,7 @@ For HTTPS with a real cert, point a DuckDNS subdomain at your host and run:
 SITE_ADDRESS=my-bookstore.duckdns.org docker compose -f compose.dev.yml up -d --build
 ```
 
-See [HTTPS_Setup.md](HTTPS_Setup.md) for the full DuckDNS walkthrough.
+See [docs/HTTPS_Setup.md](docs/HTTPS_Setup.md) for the full DuckDNS walkthrough.
 
 ### Without Docker (H2 in-memory)
 
@@ -104,8 +104,8 @@ PR titles must follow [Conventional Commits](https://www.conventionalcommits.org
 ## Further documentation
 
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — branch strategy, commit conventions, first-time repo setup
-- **[HTTPS_Setup.md](HTTPS_Setup.md)** — HTTPS setup with Caddy and DuckDNS
-- **[CORS.md](CORS.md)** — How CORS works and how it's configured here
-- **[DEVELOPER-GUIDE.md](DEVELOPER-GUIDE.md)** — Architecture, API reference, and glossary
-- **[COLLECTIONS-GUIDE.md](COLLECTIONS-GUIDE.md)** — Java Collections patterns walkthrough
-- **[AzureVM_Setup.md](AzureVM_Setup.md)** — Azure Student VM deployment guide
+- **[docs/HTTPS_Setup.md](docs/HTTPS_Setup.md)** — HTTPS setup with Caddy and DuckDNS
+- **[docs/CORS.md](docs/CORS.md)** — How CORS works and how it's configured here
+- **[docs/DEVELOPER-GUIDE.md](docs/DEVELOPER-GUIDE.md)** — Architecture, API reference, and glossary
+- **[docs/COLLECTIONS-GUIDE.md](docs/COLLECTIONS-GUIDE.md)** — Java Collections patterns walkthrough
+- **[docs/AzureVM_Setup.md](docs/AzureVM_Setup.md)** — Azure Student VM deployment guide
