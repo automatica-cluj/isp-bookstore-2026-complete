@@ -2,16 +2,21 @@ package com.bookstore.controller;
 
 import com.bookstore.dto.AuthorResponse;
 import com.bookstore.security.CustomUserDetailsService;
+import com.bookstore.security.JwtAuthFilter;
 import com.bookstore.security.JwtUtil;
+import com.bookstore.security.SecurityConfig;
 import com.bookstore.service.AuthorService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,7 +30,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(AuthorController.class)
+@WebMvcTest(
+        controllers = AuthorController.class,
+        excludeAutoConfiguration = UserDetailsServiceAutoConfiguration.class)
+@Import({SecurityConfig.class, JwtAuthFilter.class})
 @DisplayName("AuthorController")
 class AuthorControllerTest {
 
@@ -113,6 +121,7 @@ class AuthorControllerTest {
         }
 
         @Test
+        @WithAnonymousUser
         @DisplayName("returns 401 when not authenticated")
         void returns401WhenNotAuthenticated() throws Exception {
             mockMvc.perform(post("/api/authors")
