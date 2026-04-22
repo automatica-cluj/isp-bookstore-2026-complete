@@ -16,7 +16,7 @@ jobs:
     name: Determine Version
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
     outputs:
       version: ${{ steps.semver.outputs.version }}
       new_release_published: ${{ steps.semver.outputs.new_release_published }}
