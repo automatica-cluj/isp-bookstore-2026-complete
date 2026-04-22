@@ -1,0 +1,286 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="26.0.0">
+  <diagram name="HTTPS with Caddy" id="caddy-https-architecture">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="HTTPS with Caddy — How It All Fits Together" style="text;html=1;fontSize=22;fontStyle=1;align=center;verticalAlign=middle;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="400" y="20" width="800" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== SECTION 1: REQUEST FLOW ==================== -->
+        <mxCell id="section1_title" value="1. Request Flow — What happens when a user visits https://my-bookstore.duckdns.org" style="text;html=1;fontSize=14;fontStyle=5;align=left;verticalAlign=middle;whiteSpace=wrap;fillColor=#f0f0f0;rounded=1;strokeColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="720" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Browser -->
+        <mxCell id="browser" value="&lt;b&gt;Browser&lt;/b&gt;&lt;br&gt;(Chrome, Firefox, etc.)" style="shape=mxgraph.cisco.computers_and_peripherals.laptop;html=1;whiteSpace=wrap;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="160" width="100" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Step 1: DNS -->
+        <mxCell id="dns_server" value="&lt;b&gt;DuckDNS&lt;/b&gt;&lt;br&gt;DNS Server" style="shape=mxgraph.aws3.route_53;html=1;whiteSpace=wrap;fillColor=#F58534;fontColor=#FFFFFF;strokeColor=#E37222;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="340" width="100" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dns_arrow1" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#E37222;" edge="1" parent="1" source="browser" target="dns_server">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dns_label1" value="① DNS lookup&lt;br&gt;&lt;i&gt;my-bookstore.duckdns.org → ?&lt;/i&gt;" style="edgeLabel;html=1;align=left;verticalAlign=middle;fontSize=10;fillColor=#FFF2CC;rounded=1;strokeColor=#E37222;spacingLeft=4;spacingRight=4;" vertex="1" connectable="0" parent="dns_arrow1">
+          <mxGeometry x="0.2" y="-1" relative="1" as="geometry">
+            <mxPoint x="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="dns_arrow2" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#E37222;dashed=1;" edge="1" parent="1" source="dns_server" target="browser">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="dns_label2" value="② Response&lt;br&gt;&lt;i&gt;→ 20.223.137.228&lt;/i&gt;" style="edgeLabel;html=1;align=left;verticalAlign=middle;fontSize=10;fillColor=#FFF2CC;rounded=1;strokeColor=#E37222;spacingLeft=4;spacingRight=4;" vertex="1" connectable="0" parent="dns_arrow2">
+          <mxGeometry x="-0.2" y="1" relative="1" as="geometry">
+            <mxPoint x="-120" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Azure VM boundary -->
+        <mxCell id="vm_boundary" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=2;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+          <mxGeometry x="310" y="130" width="700" height="330" as="geometry" />
+        </mxCell>
+        <mxCell id="vm_label" value="Azure VM (20.223.137.228)" style="text;html=1;fontSize=12;fontStyle=1;align=left;verticalAlign=top;fillColor=#E6E6E6;rounded=1;strokeColor=#999999;spacingLeft=6;spacingRight=6;" vertex="1" parent="1">
+          <mxGeometry x="320" y="135" width="220" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Docker network boundary -->
+        <mxCell id="docker_boundary" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F5F5F5;strokeColor=#999999;strokeWidth=1;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="170" width="660" height="270" as="geometry" />
+        </mxCell>
+        <mxCell id="docker_label" value="Docker Network (internal)" style="text;html=1;fontSize=11;fontStyle=2;align=left;verticalAlign=top;fillColor=#E6E6E6;rounded=1;strokeColor=#BBBBBB;spacingLeft=4;spacingRight=4;" vertex="1" parent="1">
+          <mxGeometry x="340" y="175" width="190" height="22" as="geometry" />
+        </mxCell>
+
+        <!-- Caddy -->
+        <mxCell id="caddy" value="&lt;b&gt;Caddy&lt;/b&gt;&lt;br&gt;Reverse Proxy&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;caddy:2-alpine&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;fontStyle=0;verticalAlign=middle;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="230" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="caddy_ports" value="&lt;b&gt;:80&lt;/b&gt; (HTTP → redirect)&lt;br&gt;&lt;b&gt;:443&lt;/b&gt; (HTTPS)" style="text;html=1;fontSize=10;align=left;verticalAlign=middle;fillColor=#d5e8d4;rounded=1;strokeColor=#82b366;spacingLeft=4;spacingRight=4;" vertex="1" parent="1">
+          <mxGeometry x="370" y="315" width="160" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Spring Boot -->
+        <mxCell id="springboot" value="&lt;b&gt;Spring Boot&lt;/b&gt;&lt;br&gt;Bookstore API&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;Java 17&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="620" y="230" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="spring_port" value="&lt;b&gt;:8090&lt;/b&gt; (internal only)" style="text;html=1;fontSize=10;align=left;verticalAlign=middle;fillColor=#dae8fc;rounded=1;strokeColor=#6c8ebf;spacingLeft=4;spacingRight=4;" vertex="1" parent="1">
+          <mxGeometry x="620" y="315" width="160" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- PostgreSQL -->
+        <mxCell id="postgres" value="&lt;b&gt;PostgreSQL&lt;/b&gt;&lt;br&gt;Database&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;postgres:16-alpine&lt;/font&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=8;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="870" y="222" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="pg_port" value="&lt;b&gt;:5432&lt;/b&gt; (internal only)" style="text;html=1;fontSize=10;align=left;verticalAlign=middle;fillColor=#e1d5e7;rounded=1;strokeColor=#9673a6;spacingLeft=4;spacingRight=4;" vertex="1" parent="1">
+          <mxGeometry x="870" y="315" width="140" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows: Browser → Caddy -->
+        <mxCell id="browser_to_caddy" value="" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#82b366;" edge="1" parent="1" source="browser" target="caddy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="b2c_label" value="③ HTTPS request&lt;br&gt;&lt;i&gt;TLS encrypted&lt;/i&gt;" style="edgeLabel;html=1;fontSize=10;fillColor=#d5e8d4;rounded=1;strokeColor=#82b366;spacingLeft=4;spacingRight=4;" vertex="1" connectable="0" parent="browser_to_caddy">
+          <mxGeometry x="-0.1" relative="1" as="geometry">
+            <mxPoint y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Arrows: Caddy → Spring Boot -->
+        <mxCell id="caddy_to_spring" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1" source="caddy" target="springboot">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c2s_label" value="④ HTTP proxy&lt;br&gt;&lt;i&gt;plain, internal&lt;/i&gt;" style="edgeLabel;html=1;fontSize=10;fillColor=#dae8fc;rounded=1;strokeColor=#6c8ebf;spacingLeft=4;spacingRight=4;" vertex="1" connectable="0" parent="caddy_to_spring">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Arrows: Spring Boot → PostgreSQL -->
+        <mxCell id="spring_to_pg" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#9673a6;" edge="1" parent="1" source="springboot" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="s2p_label" value="⑤ JDBC&lt;br&gt;&lt;i&gt;internal&lt;/i&gt;" style="edgeLabel;html=1;fontSize=10;fillColor=#e1d5e7;rounded=1;strokeColor=#9673a6;spacingLeft=4;spacingRight=4;" vertex="1" connectable="0" parent="spring_to_pg">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Lock icon on Caddy -->
+        <mxCell id="lock_icon" value="🔒" style="text;html=1;fontSize=24;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="500" y="200" width="40" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== SECTION 2: CERTIFICATE FLOW ==================== -->
+        <mxCell id="section2_title" value="2. Certificate Flow — How Caddy gets a trusted TLS certificate automatically" style="text;html=1;fontSize=14;fontStyle=5;align=left;verticalAlign=middle;whiteSpace=wrap;fillColor=#f0f0f0;rounded=1;strokeColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="500" width="720" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Caddy (cert flow) -->
+        <mxCell id="caddy2" value="&lt;b&gt;Caddy&lt;/b&gt;&lt;br&gt;(on your VM)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="580" width="150" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Let's Encrypt -->
+        <mxCell id="letsencrypt" value="&lt;b&gt;Let's Encrypt&lt;/b&gt;&lt;br&gt;Certificate Authority&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;(free, automated)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="580" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- DuckDNS (cert flow) -->
+        <mxCell id="duckdns2" value="&lt;b&gt;DuckDNS&lt;/b&gt;&lt;br&gt;DNS Provider&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;(free subdomain)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#E37222;fontSize=12;shadow=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="720" width="180" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Certificate file -->
+        <mxCell id="cert_file" value="&lt;b&gt;TLS Certificate&lt;/b&gt;&lt;br&gt;&lt;font color=&quot;#666666&quot;&gt;stored in caddy-data&lt;br&gt;Docker volume&lt;/font&gt;" style="shape=note2;boundedLbl=1;whiteSpace=wrap;html=1;size=14;verticalAlign=middle;align=center;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="80" y="720" width="150" height="70" as="geometry" />
+        </mxCell>
+
+        <!-- Arrow: Caddy requests cert -->
+        <mxCell id="cert_req" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#d6b656;" edge="1" parent="1" source="caddy2" target="letsencrypt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cert_req_label" value="A. Request certificate&lt;br&gt;&lt;i&gt;for my-bookstore.duckdns.org&lt;/i&gt;" style="edgeLabel;html=1;fontSize=10;fillColor=#fff2cc;rounded=1;strokeColor=#d6b656;spacingLeft=4;spacingRight=4;" vertex="1" connectable="0" parent="cert_req">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Arrow: LE verifies via HTTP-01 -->
+        <mxCell id="le_verify" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#d6b656;dashed=1;" edge="1" parent="1" source="letsencrypt" target="caddy2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="le_verify_label" value="B. HTTP-01 challenge&lt;br&gt;&lt;i&gt;LE connects to port 80&lt;br&gt;to verify you control the domain&lt;/i&gt;" style="edgeLabel;html=1;fontSize=10;fillColor=#fff2cc;rounded=1;strokeColor=#d6b656;spacingLeft=4;spacingRight=4;" vertex="1" connectable="0" parent="le_verify">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint y="25" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Arrow: LE resolves DNS -->
+        <mxCell id="le_dns" value="" style="endArrow=classic;startArrow=classic;html=1;strokeWidth=1;strokeColor=#E37222;dashed=1;" edge="1" parent="1" source="letsencrypt" target="duckdns2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="le_dns_label" value="DNS lookup&lt;br&gt;&lt;i&gt;→ your VM IP&lt;/i&gt;" style="edgeLabel;html=1;fontSize=10;fillColor=#FFF2CC;rounded=1;strokeColor=#E37222;spacingLeft=4;spacingRight=4;" vertex="1" connectable="0" parent="le_dns">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Arrow: Caddy stores cert -->
+        <mxCell id="cert_store" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#82b366;" edge="1" parent="1" source="caddy2" target="cert_file">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cert_store_label" value="C. Store &amp; auto-renew" style="edgeLabel;html=1;fontSize=10;fillColor=#d5e8d4;rounded=1;strokeColor=#82b366;spacingLeft=4;spacingRight=4;" vertex="1" connectable="0" parent="cert_store">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ==================== SECTION 3: COMPARISON ==================== -->
+        <mxCell id="section3_title" value="3. With vs. Without Caddy" style="text;html=1;fontSize=14;fontStyle=5;align=left;verticalAlign=middle;whiteSpace=wrap;fillColor=#f0f0f0;rounded=1;strokeColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="750" y="500" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Without Caddy -->
+        <mxCell id="without_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="545" width="380" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="without_title" value="&lt;b&gt;Without Caddy&lt;/b&gt; ✗" style="text;html=1;fontSize=12;fontStyle=0;align=left;verticalAlign=top;fillColor=#f8cecc;strokeColor=#b85450;rounded=1;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="760" y="550" width="150" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="without_flow" value="Browser &lt;b&gt;──HTTP──▶&lt;/b&gt; Spring Boot :8080&lt;br&gt;&lt;br&gt;⚠ No encryption — passwords, tokens, and&lt;br&gt;data sent in plain text over the network" style="text;html=1;fontSize=11;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="760" y="575" width="360" height="60" as="geometry" />
+        </mxCell>
+
+        <!-- With Caddy -->
+        <mxCell id="with_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="750" y="665" width="380" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="with_title" value="&lt;b&gt;With Caddy&lt;/b&gt; ✓" style="text;html=1;fontSize=12;fontStyle=0;align=left;verticalAlign=top;fillColor=#d5e8d4;strokeColor=#82b366;rounded=1;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="760" y="670" width="150" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="with_flow" value="Browser &lt;b&gt;══HTTPS══▶&lt;/b&gt; Caddy &lt;b&gt;──HTTP──▶&lt;/b&gt; Spring Boot&lt;br&gt;&lt;br&gt;🔒 Encrypted between browser and server&lt;br&gt;📜 Real certificate from Let's Encrypt&lt;br&gt;🔄 Auto-renewed — zero maintenance&lt;br&gt;🌐 Free subdomain via DuckDNS" style="text;html=1;fontSize=11;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="760" y="695" width="360" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== LEGEND ==================== -->
+        <mxCell id="legend_box" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="130" width="260" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" value="&lt;b&gt;Legend&lt;/b&gt;" style="text;html=1;fontSize=12;align=left;verticalAlign=middle;spacingLeft=6;" vertex="1" parent="1">
+          <mxGeometry x="1170" y="135" width="100" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="170" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1t" value="Caddy (reverse proxy + TLS)" style="text;html=1;fontSize=10;align=left;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="166" width="190" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="195" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2t" value="Spring Boot (application)" style="text;html=1;fontSize=10;align=left;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="191" width="190" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="220" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3t" value="PostgreSQL (database)" style="text;html=1;fontSize=10;align=left;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="216" width="190" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="245" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4t" value="Let's Encrypt / DuckDNS" style="text;html=1;fontSize=10;align=left;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="241" width="190" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="leg5_line" value="" style="endArrow=classic;html=1;strokeWidth=3;strokeColor=#82b366;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1180" y="280" as="sourcePoint" />
+            <mxPoint x="1200" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg5t" value="Encrypted (HTTPS)" style="text;html=1;fontSize=10;align=left;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="270" width="190" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="leg6_line" value="" style="endArrow=classic;html=1;strokeWidth=2;strokeColor=#6c8ebf;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1180" y="305" as="sourcePoint" />
+            <mxPoint x="1200" y="305" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg6t" value="Plain HTTP (internal only)" style="text;html=1;fontSize=10;align=left;spacingLeft=4;" vertex="1" parent="1">
+          <mxGeometry x="1210" y="295" width="190" height="22" as="geometry" />
+        </mxCell>
+
+        <!-- ==================== KEY CONFIG FILES ==================== -->
+        <mxCell id="section4_title" value="4. Key Configuration" style="text;html=1;fontSize=14;fontStyle=5;align=left;verticalAlign=middle;whiteSpace=wrap;fillColor=#f0f0f0;rounded=1;strokeColor=#CCCCCC;" vertex="1" parent="1">
+          <mxGeometry x="40" y="840" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Caddyfile box -->
+        <mxCell id="caddyfile_box" value="&lt;b&gt;Caddyfile&lt;/b&gt;&lt;br&gt;&lt;hr&gt;&lt;font face=&quot;monospace&quot; size=&quot;1&quot;&gt;{$SITE_ADDRESS:localhost} {&lt;br&gt;    reverse_proxy app:8090&lt;br&gt;}&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#82b366;fontSize=11;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="40" y="885" width="280" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- compose.yml box -->
+        <mxCell id="compose_box" value="&lt;b&gt;compose.yml&lt;/b&gt; (caddy service)&lt;br&gt;&lt;hr&gt;&lt;font face=&quot;monospace&quot; size=&quot;1&quot;&gt;environment:&lt;br&gt;  SITE_ADDRESS: ${SITE_ADDRESS:-localhost}&lt;br&gt;ports: &quot;80:80&quot;, &quot;443:443&quot;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="350" y="885" width="320" height="90" as="geometry" />
+        </mxCell>
+
+        <!-- Deploy commands -->
+        <mxCell id="deploy_box" value="&lt;b&gt;Deploy Commands&lt;/b&gt;&lt;br&gt;&lt;hr&gt;&lt;font face=&quot;monospace&quot; size=&quot;1&quot;&gt;# Local (default: localhost, self-signed)&lt;br&gt;docker compose up -d&lt;br&gt;&lt;br&gt;# Remote (Let's Encrypt, real cert)&lt;br&gt;SITE_ADDRESS=my-app.duckdns.org \&lt;br&gt;  docker compose up -d&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="700" y="885" width="320" height="130" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
