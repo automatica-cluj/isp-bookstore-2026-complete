@@ -4,12 +4,16 @@ import com.bookstore.model.Role;
 import com.bookstore.model.User;
 import com.bookstore.repository.UserRepository;
 import com.bookstore.security.CustomUserDetailsService;
+import com.bookstore.security.JwtAuthFilter;
 import com.bookstore.security.JwtUtil;
+import com.bookstore.security.SecurityConfig;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +35,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(AuthController.class)
+@WebMvcTest(
+        controllers = AuthController.class,
+        excludeAutoConfiguration = UserDetailsServiceAutoConfiguration.class)
+@Import({SecurityConfig.class, JwtAuthFilter.class})
 @DisplayName("AuthController")
 class AuthControllerTest {
 

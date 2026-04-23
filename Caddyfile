@@ -1,7 +1,7 @@
 # Local:  use "localhost" (self-signed cert, browser warning)
 # Remote: use your DuckDNS subdomain (real Let's Encrypt cert)
 #
-# See HTTPS_Setup.md for instructions.
+# See docs/HTTPS_Setup.md for instructions.
 {$SITE_ADDRESS:localhost} {
 	reverse_proxy app:8090
 }
