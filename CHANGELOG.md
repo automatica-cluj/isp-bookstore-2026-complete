@@ -5,6 +5,13 @@ All notable changes to the ISP 2026 Bookstore will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0-beta.1](https://github.com/automatica-cluj/isp-bookstore-2026-complete/compare/v1.2.0...v1.3.0-beta.1) (2026-04-23)
+
+
+### ✨ Features
+
+* update statistics service. ([#28](https://github.com/automatica-cluj/isp-bookstore-2026-complete/issues/28)) ([43cc76e](https://github.com/automatica-cluj/isp-bookstore-2026-complete/commit/43cc76ea555b34c030dea9248c82f2e5e837422c))
+
 ## [1.2.0](https://github.com/automatica-cluj/isp-bookstore-2026-complete/compare/v1.1.0...v1.2.0) (2026-04-23)
 
 
