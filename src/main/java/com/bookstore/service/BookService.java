@@ -34,6 +34,10 @@ public class BookService {
                 .toList();
     }
 
+    public int countAll(){
+        return bookRepository.findAll().size();
+    }
+
     public BookResponse findById(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found with id: " + id));
