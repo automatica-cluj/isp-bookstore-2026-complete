@@ -30,4 +30,11 @@ public class StatisticsController {
         return ResponseEntity.ok(stats);
     }
 
+    @GetMapping("/health")
+    public ResponseEntity<Map<String, Object>> getHealth() {
+        Map<String, Object> health = new HashMap<>();
+        health.put("status", "ok");
+        return ResponseEntity.ok(health);
+    }
+
 }
