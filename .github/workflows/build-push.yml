@@ -219,29 +219,38 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      - name: Merge main into develop (main wins on pom.xml / CHANGELOG.md)
+      - name: Squash-merge main into develop
         run: |
           set -e
           git fetch origin main
 
-          if git merge origin/main --no-ff \
-               -m "chore(sync): back-merge main v${{ needs.semantic-version.outputs.version }} into develop"; then
-            echo "Clean merge."
-          else
-            # Only auto-resolve the two release-managed files. Any other conflict aborts.
+          # Squash-merge collapses main's new commits (including the
+          # `chore(release)` commit that holds a release-triggering scope)
+          # into a single `chore(sync)` commit on develop. That keeps
+          # semantic-release on develop from re-analyzing main's release
+          # commit and cutting a phantom prerelease.
+          if ! git merge --squash origin/main; then
+            # Auto-resolve only the two release-managed files; abort on
+            # any real code conflict so a maintainer sees it.
             git checkout origin/main -- pom.xml CHANGELOG.md
             git add pom.xml CHANGELOG.md
 
             if git ls-files -u | grep .; then
               echo "::error::Non-release conflicts detected; aborting back-merge for manual resolution."
-              git merge --abort
+              git merge --abort || true
+              git reset --hard HEAD
               exit 1
             fi
-
-            git commit --no-edit
           fi
 
-          git push origin develop
+          # `git merge --squash` stages changes but doesn't commit.
+          # Only commit if there's actually something to record.
+          if git diff --cached --quiet; then
+            echo "Nothing to back-merge (develop already contains main)."
+          else
+            git commit -m "chore(sync): back-merge main v${{ needs.semantic-version.outputs.version }} into develop"
+            git push origin develop
+          fi
 
       - name: Back-merge summary
         run: |
