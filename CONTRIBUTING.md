@@ -54,7 +54,7 @@ feat(no-release): draft new author-search API
 3. **Open a PR** targeting `develop`. The PR title **must** be a valid conventional-commit header; a GitHub Action (`PR Title`) blocks merges otherwise.
 4. **Wait for CI** (tests + package). Fix anything red.
 5. **Squash-and-merge.** The PR title becomes the single commit on `develop`, so that's the line `semantic-release` will read.
-6. **Promote to stable:** when `develop` is ready, open a `chore: release X.Y.Z` PR from `develop` → `main` and merge it. The pipeline tags `vX.Y.Z`, updates `CHANGELOG.md`, and publishes the image.
+6. **Promote to stable:** when `develop` is ready, open a PR from `develop` → `main` titled `chore(promote): release vX.Y.Z` (or `chore(release): ...`). The pipeline tags `vX.Y.Z`, updates `CHANGELOG.md`, publishes the image, and then **automatically back-merges `main` into `develop`** so `pom.xml` / `CHANGELOG.md` stay in sync. Don't open feature PRs against `main` — the `PR Title` check only accepts `chore(release|promote|sync):` titles on that branch.
 
 ### What triggers a release?
 

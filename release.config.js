@@ -28,6 +28,13 @@ module.exports = {
       {
         preset: 'conventionalcommits',
         releaseRules: [
+          // Promotion PRs (develop → main) are titled `chore(release): ...`
+          // or `chore(promote): ...`. They arrive on main as a single
+          // squash-merged chore commit, so the scope — not the type — is
+          // what has to trigger the release.
+          { type: 'chore', scope: 'sync', release: false },
+          { type: 'chore', scope: 'release', release: 'minor' },
+          { type: 'chore', scope: 'promote', release: 'minor' },
           { type: 'feat', release: 'minor' },
           { type: 'fix', release: 'patch' },
           { type: 'perf', release: 'patch' },

@@ -15,11 +15,12 @@ permissions:
   pull-requests: read
 
 jobs:
-  validate:
+  validate-develop:
     name: Validate conventional-commit title
+    if: github.event.pull_request.base.ref == 'develop'
     runs-on: ubuntu-latest
     steps:
-      - name: Check PR title
+      - name: Check PR title (topic → develop)
         uses: amannn/action-semantic-pull-request@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -41,3 +42,29 @@ jobs:
           subjectPatternError: |
             The subject "{subject}" found in the pull request title "{title}"
             should start with a lowercase character.
+
+  validate-main:
+    name: Validate conventional-commit title
+    if: github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check PR title (develop → main promotion only)
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            chore
+          scopes: |
+            release
+            promote
+            sync
+          requireScope: true
+          subjectPattern: ^(?![A-Z]).+$
+          subjectPatternError: |
+            The subject "{subject}" found in the pull request title "{title}"
+            should start with a lowercase character.
+          wip: false
+          # PRs into `main` are reserved for develop → main promotions.
+          # Allowed titles: `chore(release): ...`, `chore(promote): ...`, `chore(sync): ...`.
+          # Feature/fix PRs must target `develop` instead.

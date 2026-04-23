@@ -196,3 +196,67 @@ jobs:
             echo "**Version:** \`v${{ needs.semantic-version.outputs.version }}\`"
             echo "**Release:** https://github.com/${{ github.repository }}/releases/tag/v${{ needs.semantic-version.outputs.version }}"
           } >> "$GITHUB_STEP_SUMMARY"
+
+  sync-develop:
+    name: Back-merge main → develop
+    runs-on: ubuntu-latest
+    needs: [semantic-version, create-release]
+    if: needs.semantic-version.outputs.new_release_published == 'true' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: develop
+          persist-credentials: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Squash-merge main into develop
+        run: |
+          set -e
+          git fetch origin main
+
+          # Squash-merge collapses main's new commits (including the
+          # `chore(release)` commit that holds a release-triggering scope)
+          # into a single `chore(sync)` commit on develop. That keeps
+          # semantic-release on develop from re-analyzing main's release
+          # commit and cutting a phantom prerelease.
+          if ! git merge --squash origin/main; then
+            # Auto-resolve only the two release-managed files; abort on
+            # any real code conflict so a maintainer sees it.
+            git checkout origin/main -- pom.xml CHANGELOG.md
+            git add pom.xml CHANGELOG.md
+
+            if git ls-files -u | grep .; then
+              echo "::error::Non-release conflicts detected; aborting back-merge for manual resolution."
+              git merge --abort || true
+              git reset --hard HEAD
+              exit 1
+            fi
+          fi
+
+          # `git merge --squash` stages changes but doesn't commit.
+          # Only commit if there's actually something to record.
+          if git diff --cached --quiet; then
+            echo "Nothing to back-merge (develop already contains main)."
+          else
+            git commit -m "chore(sync): back-merge main v${{ needs.semantic-version.outputs.version }} into develop"
+            git push origin develop
+          fi
+
+      - name: Back-merge summary
+        run: |
+          {
+            echo "### Back-merge main → develop 🔁"
+            echo ""
+            echo "Main \`v${{ needs.semantic-version.outputs.version }}\` has been merged into \`develop\`."
+            echo "semantic-release will now run on \`develop\` and may cut a new \`vX.Y.Z-beta.N\`."
+          } >> "$GITHUB_STEP_SUMMARY"
