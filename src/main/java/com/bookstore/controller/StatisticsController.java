@@ -19,6 +19,10 @@ public class StatisticsController {
         this.bookService = bookService;
     }
 
+    /**
+     * Count  books.
+     * @return
+     */
     @GetMapping
     public ResponseEntity<Map<String, Object>> getStatistics() {
         Map<String, Object> stats = new HashMap<>();
