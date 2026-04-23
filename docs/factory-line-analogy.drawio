@@ -1,0 +1,302 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="24.0.0" type="device">
+  <diagram id="factory-line" name="Factory-Line Analogy">
+    <mxGraphModel dx="1800" dy="1100" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="The Bookstore Factory — From Raw Idea to Shipped Product" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=22;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1720" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="The dev workflow, build pipeline, and release process drawn as a real-world manufacturing assembly line. Top row = factory station. Bottom row = software equivalent." style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontStyle=2" vertex="1" parent="1">
+          <mxGeometry x="40" y="56" width="1720" height="22" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legendBox" value="Legend" style="swimlane;html=1;fontSize=12;fontStyle=1;startSize=22;fillColor=#f5f5f5;strokeColor=#999999" vertex="1" parent="1">
+          <mxGeometry x="40" y="90" width="1720" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="legFactory" value="Factory station&#xa;(real-world metaphor)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10" vertex="1" parent="legendBox">
+          <mxGeometry x="20" y="26" width="160" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="legCode" value="Software equivalent&#xa;(what it really is)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10" vertex="1" parent="legendBox">
+          <mxGeometry x="200" y="26" width="160" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="legCheck" value="QC / gate&#xa;(something must pass)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=10" vertex="1" parent="legendBox">
+          <mxGeometry x="380" y="26" width="160" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="legOutput" value="Output / artifact&#xa;(what leaves the line)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10" vertex="1" parent="legendBox">
+          <mxGeometry x="560" y="26" width="160" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="legWarn" value="Rule / gotcha&#xa;(read carefully)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10" vertex="1" parent="legendBox">
+          <mxGeometry x="740" y="26" width="160" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="legBranch" value="Branch / inventory line&#xa;(where product sits)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10" vertex="1" parent="legendBox">
+          <mxGeometry x="920" y="26" width="160" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="laneFactory" value="The assembly line (factory view)" style="swimlane;html=1;fontSize=13;fontStyle=1;startSize=28;fillColor=#fffaf0;strokeColor=#d6b656;swimlaneFillColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="40" y="170" width="1720" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="f1" value="① Design Studio&#xa;&#xa;Engineer drafts a&#xa;blueprint for a new&#xa;part on the drawing board." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center" vertex="1" parent="laneFactory">
+          <mxGeometry x="20" y="40" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f2" value="② Parts Workshop&#xa;&#xa;Parts are machined&#xa;and bench-tested in&#xa;the engineer's own bay." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center" vertex="1" parent="laneFactory">
+          <mxGeometry x="220" y="40" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f3" value="③ QC Inspection Booth&#xa;&#xa;Every part passes two&#xa;checks: stress test&#xa;&amp; label conformance." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=center" vertex="1" parent="laneFactory">
+          <mxGeometry x="420" y="40" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f4" value="④ Foreman's Desk&#xa;&#xa;Shift supervisor signs&#xa;off and welds the new&#xa;part onto the main line." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center" vertex="1" parent="laneFactory">
+          <mxGeometry x="620" y="40" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f5" value="⑤ Main Conveyor&#xa;&#xa;The half-finished product&#xa;rides the belt, picking up&#xa;more features per shift." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center" vertex="1" parent="laneFactory">
+          <mxGeometry x="820" y="40" width="180" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f6" value="⑥ Packaging &amp;&#xa;Labeling Station&#xa;&#xa;Product shrink-wrapped,&#xa;stamped with serial number,&#xa;model code, manual inserted." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center" vertex="1" parent="laneFactory">
+          <mxGeometry x="1020" y="40" width="200" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f7" value="⑦ Warehouse&#xa;&#xa;Two aisles: Beta&#xa;samples and Retail&#xa;stock on the shelves." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center" vertex="1" parent="laneFactory">
+          <mxGeometry x="1240" y="40" width="200" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="f8" value="⑧ Shipping Dock&#xa;&#xa;Crates leave the building:&#xa;beta testers today,&#xa;retail customers tomorrow." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=center" vertex="1" parent="laneFactory">
+          <mxGeometry x="1460" y="40" width="200" height="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="eF1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#d6b656" edge="1" parent="laneFactory" source="f1" target="f2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eF2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#d6b656" edge="1" parent="laneFactory" source="f2" target="f3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eF3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#d6b656" edge="1" parent="laneFactory" source="f3" target="f4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eF4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#d6b656" edge="1" parent="laneFactory" source="f4" target="f5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eF5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#d6b656" edge="1" parent="laneFactory" source="f5" target="f6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eF6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#d6b656" edge="1" parent="laneFactory" source="f6" target="f7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eF7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#d6b656" edge="1" parent="laneFactory" source="f7" target="f8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="laneCode" value="The same line, seen by the build system (software view)" style="swimlane;html=1;fontSize=13;fontStyle=1;startSize=28;fillColor=#f0f4fa;strokeColor=#6c8ebf;swimlaneFillColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="40" y="390" width="1720" height="230" as="geometry" />
+        </mxCell>
+
+        <mxCell id="c1" value="Developer opens editor&#xa;&#xa;&lt;b&gt;git checkout -b&lt;/b&gt;&#xa;&lt;b&gt;feat/books-count&lt;/b&gt;&#xa;cut from &lt;i&gt;develop&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=center" vertex="1" parent="laneCode">
+          <mxGeometry x="20" y="40" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" value="Local build + tests&#xa;&#xa;&lt;b&gt;mvn spring-boot:run&lt;/b&gt;&#xa;&lt;b&gt;mvn test&lt;/b&gt;&#xa;&#xa;@DataJpaTest / @WebMvcTest&#xa;/ Mockito (service layer)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=center" vertex="1" parent="laneCode">
+          <mxGeometry x="220" y="40" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="Required PR checks&#xa;&#xa;&lt;b&gt;ci.yml&lt;/b&gt;&#xa;Build &amp;amp; Test on JDK 17&#xa;&#xa;&lt;b&gt;pr-title.yml&lt;/b&gt;&#xa;Conventional Commits&#xa;(feat: / fix: / …)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11;align=center" vertex="1" parent="laneCode">
+          <mxGeometry x="420" y="40" width="180" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="PR review + merge&#xa;&#xa;&lt;b&gt;Squash-merge&lt;/b&gt;&#xa;PR title becomes the&#xa;single commit message&#xa;on develop." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=center" vertex="1" parent="laneCode">
+          <mxGeometry x="620" y="40" width="180" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="develop branch&#xa;&#xa;Features accumulate&#xa;as individual squash&#xa;commits on the tip.&#xa;&#xa;&lt;i&gt;(later promoted to main&#xa;via a merge commit)&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;align=center" vertex="1" parent="laneCode">
+          <mxGeometry x="820" y="40" width="180" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" value="build-push.yml runs&#xa;&#xa;1. semantic-release --dry-run&#xa;   computes next version&#xa;2. &lt;b&gt;docker build&lt;/b&gt; with&#xa;   VERSION / VCS_REF / BUILD_DATE&#xa;3. semantic-release (real) writes&#xa;   CHANGELOG.md + bumps pom.xml&#xa;4. git tag + commit&#xa;   chore(release): X.Y.Z &lt;b&gt;[skip ci]&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=left;spacingLeft=8" vertex="1" parent="laneCode">
+          <mxGeometry x="1020" y="40" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" value="GHCR (registry)&#xa;&#xa;&lt;b&gt;develop push:&lt;/b&gt;&#xa;vX.Y.Z-beta.N, develop,&#xa;sha-&lt;short&gt;&#xa;&#xa;&lt;b&gt;main push:&lt;/b&gt;&#xa;vX.Y.Z, &lt;b&gt;latest&lt;/b&gt;, main,&#xa;sha-&lt;short&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center" vertex="1" parent="laneCode">
+          <mxGeometry x="1240" y="40" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c8" value="GitHub Release&#xa;&#xa;&lt;b&gt;develop:&lt;/b&gt; marked&#xa;&quot;Pre-release&quot;&#xa;(beta channel)&#xa;&#xa;&lt;b&gt;main:&lt;/b&gt; stable release,&#xa;aggregated CHANGELOG&#xa;visible to end users." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center" vertex="1" parent="laneCode">
+          <mxGeometry x="1460" y="40" width="200" height="160" as="geometry" />
+        </mxCell>
+
+        <mxCell id="eC1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#6c8ebf" edge="1" parent="laneCode" source="c1" target="c2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eC2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#6c8ebf" edge="1" parent="laneCode" source="c2" target="c3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eC3" value="both green" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#6c8ebf;fontSize=10" edge="1" parent="laneCode" source="c3" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eC4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#6c8ebf" edge="1" parent="laneCode" source="c4" target="c5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eC5" value="push event" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#6c8ebf;fontSize=10" edge="1" parent="laneCode" source="c5" target="c6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eC6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#6c8ebf" edge="1" parent="laneCode" source="c6" target="c7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eC7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;endFill=1;strokeWidth=2;strokeColor=#6c8ebf" edge="1" parent="laneCode" source="c7" target="c8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="laneWarehouse" value="Two warehouse aisles — where the crates actually sit" style="swimlane;html=1;fontSize=13;fontStyle=1;startSize=28;fillColor=#f0fbf0;strokeColor=#82b366;swimlaneFillColor=#ffffff" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="1180" height="220" as="geometry" />
+        </mxCell>
+
+        <mxCell id="betaAisle" value="Aisle A — Beta samples  (develop → beta channel)" style="swimlane;html=1;fontSize=12;fontStyle=1;startSize=26;fillColor=#e8f5e9;strokeColor=#82b366" vertex="1" parent="laneWarehouse">
+          <mxGeometry x="20" y="40" width="560" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="betaCrate" value="Crate label&#xa;&#xa;&lt;b&gt;v1.3.0-beta.1&lt;/b&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="betaAisle">
+          <mxGeometry x="20" y="40" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="betaSku" value="SKUs on the crate&#xa;&#xa;ghcr.io/…:v1.3.0-beta.1&#xa;ghcr.io/…:develop&#xa;ghcr.io/…:sha-&lt;short&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center" vertex="1" parent="betaAisle">
+          <mxGeometry x="190" y="35" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="betaShelf" value="Distribution&#xa;&#xa;GitHub Release&#xa;&lt;b&gt;marked &quot;Pre-release&quot;&lt;/b&gt;&#xa;— beta testers only" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center" vertex="1" parent="betaAisle">
+          <mxGeometry x="390" y="35" width="155" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="stableAisle" value="Aisle B — Retail stock  (main → stable channel)" style="swimlane;html=1;fontSize=12;fontStyle=1;startSize=26;fillColor=#e8f5e9;strokeColor=#82b366" vertex="1" parent="laneWarehouse">
+          <mxGeometry x="600" y="40" width="560" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="stableCrate" value="Crate label&#xa;&#xa;&lt;b&gt;v1.3.0&lt;/b&gt;" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="stableAisle">
+          <mxGeometry x="20" y="40" width="140" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="stableSku" value="SKUs on the crate&#xa;&#xa;ghcr.io/…:v1.3.0&#xa;ghcr.io/…:&lt;b&gt;latest&lt;/b&gt;&#xa;ghcr.io/…:main&#xa;ghcr.io/…:sha-&lt;short&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center" vertex="1" parent="stableAisle">
+          <mxGeometry x="190" y="35" width="180" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="stableShelf" value="Distribution&#xa;&#xa;GitHub Release (stable)&#xa;CHANGELOG.md updated&#xa;pom.xml &amp;lt;version&amp;gt; bumped" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=center" vertex="1" parent="stableAisle">
+          <mxGeometry x="390" y="35" width="155" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="promoArrow" value="promote: develop → main  (merge commit)" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;strokeColor=#d6b656;fontSize=11;fontStyle=1" edge="1" parent="laneWarehouse" source="betaAisle" target="stableAisle">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="580" y="120" as="sourcePoint" />
+            <mxPoint x="600" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="recipeBox" value="Production recipe book — Conventional Commits" style="swimlane;html=1;fontSize=13;fontStyle=1;startSize=28;fillColor=#f5f5f5;strokeColor=#999999" vertex="1" parent="1">
+          <mxGeometry x="1240" y="640" width="520" height="480" as="geometry" />
+        </mxCell>
+        <mxCell id="recipeIntro" value="The PR title is the production order. semantic-release reads it&#xa;and decides whether a new product model is stamped today." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontStyle=2" vertex="1" parent="recipeBox">
+          <mxGeometry x="15" y="36" width="490" height="34" as="geometry" />
+        </mxCell>
+
+        <mxCell id="recFeat" value="&lt;b&gt;feat:&lt;/b&gt; add … → &lt;b&gt;MINOR&lt;/b&gt; bump&#xa;&lt;i&gt;Factory analog: new product model added to the catalogue (1.2.0 → 1.3.0).&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;align=left;spacingLeft=8;spacingTop=4;spacingBottom=4" vertex="1" parent="recipeBox">
+          <mxGeometry x="15" y="78" width="490" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="recFix" value="&lt;b&gt;fix: / perf: / refactor: / revert:&lt;/b&gt; → &lt;b&gt;PATCH&lt;/b&gt; bump&#xa;&lt;i&gt;Factory analog: same model, improved tolerance / reworked part (1.2.0 → 1.2.1).&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=8;spacingTop=4;spacingBottom=4" vertex="1" parent="recipeBox">
+          <mxGeometry x="15" y="140" width="490" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="recMajor" value="&lt;b&gt;feat!:&lt;/b&gt; …  or body has  &lt;b&gt;BREAKING CHANGE:&lt;/b&gt; → &lt;b&gt;MAJOR&lt;/b&gt; bump&#xa;&lt;i&gt;Factory analog: product platform redesigned — old accessories no longer fit (1.2.0 → 2.0.0).&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;align=left;spacingLeft=8;spacingTop=4;spacingBottom=4" vertex="1" parent="recipeBox">
+          <mxGeometry x="15" y="202" width="490" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="recNone" value="&lt;b&gt;docs: / chore: / test: / ci: / build: / style:&lt;/b&gt; → &lt;b&gt;NO release&lt;/b&gt;&#xa;&lt;i&gt;Factory analog: internal maintenance — line cleaned, machines oiled. Nothing new ships,&#xa;but today's production still receives a batch number (sha-&amp;lt;short&amp;gt; image).&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;fontSize=11;align=left;spacingLeft=8;spacingTop=4;spacingBottom=4" vertex="1" parent="recipeBox">
+          <mxGeometry x="15" y="274" width="490" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="recNoRel" value="scope &lt;b&gt;(no-release)&lt;/b&gt; suppresses a release even for feat/fix&#xa;&lt;i&gt;e.g. feat(no-release): draft checkout flow — factory analog: prototype built but held back&#xa;from the warehouse.&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;align=left;spacingLeft=8;spacingTop=4;spacingBottom=4" vertex="1" parent="recipeBox">
+          <mxGeometry x="15" y="352" width="490" height="68" as="geometry" />
+        </mxCell>
+        <mxCell id="recBranchNote" value="Branch = channel:  main → stable  vX.Y.Z    •    develop → beta  vX.Y.Z-beta.N" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=10;fontStyle=2" vertex="1" parent="recipeBox">
+          <mxGeometry x="15" y="430" width="490" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="recVersNote" value="Factory rule: never hand-stamp a serial number — only the labeling machine (semantic-release) may write CHANGELOG.md and pom.xml &amp;lt;version&amp;gt;." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=10;fontStyle=2;fontColor=#b85450" vertex="1" parent="recipeBox">
+          <mxGeometry x="15" y="450" width="490" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mapTitle" value="Factory-to-code cheat sheet" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="880" width="400" height="24" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mapTable" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999" vertex="1" parent="1">
+          <mxGeometry x="40" y="910" width="1180" height="220" as="geometry" />
+        </mxCell>
+        <mxCell id="mapH1" value="Factory station / artifact" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#999999;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="910" width="290" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="mapH2" value="What it really is in this repo" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#999999;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="330" y="910" width="410" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="mapH3" value="Where to look" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#999999;fontSize=11;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="740" y="910" width="480" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mR1a" value="Blueprint / drawing board" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffdf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="40" y="938" width="290" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR1b" value="Topic branch cut from develop" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f6f9fd;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="330" y="938" width="410" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR1c" value="git checkout -b feat/… — see CONTRIBUTING.md" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7fbf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="740" y="938" width="480" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mR2a" value="Bench test in the workshop" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffdf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="40" y="964" width="290" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR2b" value="mvn test locally (JUnit + Mockito + MockMvc)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f6f9fd;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="330" y="964" width="410" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR2c" value="src/test/java/** — BookServiceTest, @WebMvcTest classes" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7fbf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="740" y="964" width="480" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mR3a" value="QC inspection booth (gate)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffdf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="40" y="990" width="290" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR3b" value="ci.yml + pr-title.yml on every PR" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f6f9fd;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="330" y="990" width="410" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR3c" value=".github/workflows/ci.yml, .github/workflows/pr-title.yml" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7fbf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="740" y="990" width="480" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mR4a" value="Foreman welds part onto main line" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffdf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="40" y="1016" width="290" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR4b" value="PR review + squash-merge into develop" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f6f9fd;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="330" y="1016" width="410" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR4c" value="GitHub PR UI — squash-merge leaves a single commit on develop" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7fbf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="740" y="1016" width="480" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mR5a" value="Packaging / shrink-wrap" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffdf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="40" y="1042" width="290" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR5b" value="docker build → container image" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f6f9fd;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="330" y="1042" width="410" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR5c" value="Dockerfile + .github/workflows/build-push.yml (step 2)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7fbf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="740" y="1042" width="480" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mR6a" value="Serial number / model code / manual" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffdf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="40" y="1068" width="290" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR6b" value="git tag / pom.xml &lt;version&gt; / CHANGELOG.md" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f6f9fd;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="330" y="1068" width="410" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="mR6c" value="stamped by semantic-release — never hand-edit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7fbf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8;fontStyle=2;fontColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="740" y="1068" width="480" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="mR7a" value="Warehouse crate / shipping dock" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fffdf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="40" y="1094" width="290" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="mR7b" value="GHCR image tags + GitHub Release (pre-release or stable)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f6f9fd;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="330" y="1094" width="410" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="mR7c" value="ghcr.io/&lt;owner&gt;/&lt;repo&gt; — consumed by compose.prod.yml" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7fbf5;strokeColor=#cccccc;fontSize=11;align=left;spacingLeft=8" vertex="1" parent="1">
+          <mxGeometry x="740" y="1094" width="480" height="28" as="geometry" />
+        </mxCell>
+
+        <mxCell id="warnTitle" value="Factory rules you will get burned by" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=1;fontColor=#b85450" vertex="1" parent="1">
+          <mxGeometry x="40" y="1140" width="520" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="warn1" value="• Squash-merge means the PR title IS the production order. Typo &quot;feat add…&quot; (missing colon) → semantic-release treats it as no-release; no serial stamp is issued." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="40" y="1160" width="1720" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
