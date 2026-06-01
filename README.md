@@ -101,6 +101,7 @@ PR titles must follow [Conventional Commits](https://www.conventionalcommits.org
 ## Further documentation
 
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** — branch strategy, commit conventions, first-time repo setup
+- **[docs/REUSE.md](docs/REUSE.md)** — reuse this repo (and its CI/CD) for your own project
 - **[docs/HTTPS_Setup.md](docs/HTTPS_Setup.md)** — HTTPS setup with Caddy and DuckDNS
 - **[docs/CORS.md](docs/CORS.md)** — How CORS works and how it's configured here
 - **[docs/DEVELOPER-GUIDE.md](docs/DEVELOPER-GUIDE.md)** — Architecture, API reference, and glossary
