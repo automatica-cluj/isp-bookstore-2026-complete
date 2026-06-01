@@ -14,6 +14,11 @@ updates:
     commit-message:
       prefix: chore
       include: scope
+    # Skip major bumps (e.g. Spring Boot 3.x → 4.x) — they need a deliberate,
+    # reviewed upgrade, not an auto-PR. Minor/patch (incl. security) still flow.
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: docker
     directory: /
@@ -29,6 +34,10 @@ updates:
     commit-message:
       prefix: chore
       include: scope
+    # Skip major base-image bumps — review those by hand.
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
@@ -44,3 +53,7 @@ updates:
     commit-message:
       prefix: chore
       include: scope
+    # Skip major action bumps (e.g. actions/setup-java v4 → v5) — review by hand.
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
