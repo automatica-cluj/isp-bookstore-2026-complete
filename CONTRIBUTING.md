@@ -1,18 +1,19 @@
 # Contributing
 
-This repository uses an automated release pipeline: every time something lands on `main` or `develop`, GitHub Actions decides whether to cut a new version, builds the Docker image, publishes it to GHCR, and updates the `CHANGELOG`. The only thing **you** have to do is write your commit/PR title in [Conventional Commits](https://www.conventionalcommits.org/) format.
+This repository uses an automated release pipeline: every time something lands on `main`, GitHub Actions decides whether to cut a new version, builds the Docker image, publishes it to GHCR, and updates the `CHANGELOG`. The only thing **you** have to do is write your commit/PR title in [Conventional Commits](https://www.conventionalcommits.org/) format.
 
 ---
 
 ## Branch strategy
 
-| Branch           | Purpose                     | Release channel               |
-| ---------------- | --------------------------- | ----------------------------- |
-| `main`           | Stable code                 | Stable — `v1.2.3`             |
-| `develop`        | Integration for next stable | Prerelease — `v1.3.0-beta.1`  |
-| `feat/...` etc.  | Topic branches              | No release                    |
+This project is **trunk-based**: `main` is the only long-lived branch.
 
-Topic branches are cut from `develop`, merged back into `develop` via PR, and periodically `develop` is merged into `main` to cut a stable release.
+| Branch           | Purpose                     | Release                       |
+| ---------------- | --------------------------- | ----------------------------- |
+| `main`           | The trunk — always shippable | Versioned — `v1.2.3`         |
+| `feat/...` etc.  | Short-lived topic branches  | No release                    |
+
+Topic branches are cut from `main` and merged straight back into `main` via a squash-merged PR. Each merge that contains a `feat:` / `fix:` / etc. cuts a new version automatically. There is no `develop` branch and no separate beta/prerelease channel.
 
 ---
 
@@ -49,18 +50,16 @@ feat(no-release): draft new author-search API
 
 ## Workflow
 
-1. **Branch from `develop`:** `git checkout -b feat/cart-persistence develop`
+1. **Branch from `main`:** `git checkout -b feat/cart-persistence main`
 2. **Commit** using Conventional Commits. Individual commit messages inside a PR don't have to be perfect — the PR title is what counts (see below).
-3. **Open a PR** targeting `develop`. The PR title **must** be a valid conventional-commit header; a GitHub Action (`PR Title`) blocks merges otherwise.
+3. **Open a PR** targeting `main`. The PR title **must** be a valid conventional-commit header; a GitHub Action (`PR Title`) blocks merges otherwise.
 4. **Wait for CI** (tests + package). Fix anything red.
-5. **Squash-and-merge.** The PR title becomes the single commit on `develop`, so that's the line `semantic-release` will read.
-6. **Promote to stable:** when `develop` is ready, open a PR from `develop` → `main` titled `chore(promote): release vX.Y.Z` (or `chore(release): ...`). The pipeline tags `vX.Y.Z`, updates `CHANGELOG.md`, publishes the image, and then **automatically back-merges `main` into `develop`** so `pom.xml` / `CHANGELOG.md` stay in sync. Don't open feature PRs against `main` — the `PR Title` check only accepts `chore(release|promote|sync):` titles on that branch.
+5. **Squash-and-merge.** The PR title becomes the single commit on `main`, so that's the line `semantic-release` reads to decide the version bump. The pipeline then tags `vX.Y.Z`, updates `CHANGELOG.md`, and publishes the image — all automatically.
 
 ### What triggers a release?
 
-- Push to `main`, commits since the last tag include `feat:`, `fix:`, `perf:`, `refactor:`, or a breaking change → a new stable release (`vX.Y.Z`).
-- Push to `develop`, same commit types → a new beta prerelease (`vX.Y.Z-beta.N`).
-- Only `docs:` / `chore:` / `test:` / `ci:` / `style:` / `build:` → **no release**, but the image is still rebuilt and pushed with `sha-<short>` and branch tags.
+- Push to `main` where the squashed PR title is `feat:`, `fix:`, `perf:`, `refactor:`, or a breaking change → a new release (`vX.Y.Z`).
+- Only `docs:` / `chore:` / `test:` / `ci:` / `style:` / `build:` → **no release**, but the image is still rebuilt and pushed with a `sha-<short>` tag.
 
 ---
 
@@ -75,7 +74,6 @@ Do these once, in the GitHub UI, after the first push:
 2. **Settings → Branches → Branch protection rules** — add a rule for `main`:
    - Require a pull request before merging
    - Require status checks to pass: `Build and Test`, `Validate conventional-commit title`
-   - Do the same for `develop`
 3. **Settings → Actions → General → Workflow permissions**
    - **Read and write permissions** (so `@semantic-release/git` can push the release commit and tag)
    - Allow GitHub Actions to create and approve pull requests: **on**

@@ -1,26 +1,19 @@
 /**
  * semantic-release configuration for ISP 2026 Bookstore
  *
- * Commit convention → version bump:
- *   feat:  ...             → minor   (1.0.0 → 1.1.0)
- *   fix:  / perf: / refactor: → patch (1.0.0 → 1.0.1)
- *   feat!: ... / BREAKING CHANGE: → major (1.0.0 → 2.0.0)
- *   docs: / chore: / test: / ci: / build: / style: → no release
+ * Single-branch (trunk-based) model: everything ships from `main`.
+ * The PR title (squash-merged onto `main`) is the line semantic-release reads.
  *
- * Branches:
- *   main     → stable releases  (vX.Y.Z)
- *   develop  → beta prereleases (vX.Y.Z-beta.N, channel "beta")
+ * Commit / PR title → version bump:
+ *   feat: ...                       → minor   (1.2.0 → 1.3.0)
+ *   fix: / perf: / refactor:        → patch   (1.2.0 → 1.2.1)
+ *   feat!: ... / BREAKING CHANGE:   → major   (1.2.0 → 2.0.0)
+ *   docs: / chore: / test: / ci: / build: / style: → no release
+ *   scope `no-release` (e.g. feat(no-release): ...) → no release
  */
 
 module.exports = {
-  branches: [
-    'main',
-    {
-      name: 'develop',
-      prerelease: 'beta',
-      channel: 'beta'
-    }
-  ],
+  branches: ['main'],
 
   plugins: [
     [
@@ -28,13 +21,6 @@ module.exports = {
       {
         preset: 'conventionalcommits',
         releaseRules: [
-          // Promotion PRs (develop → main) are titled `chore(release): ...`
-          // or `chore(promote): ...`. They arrive on main as a single
-          // squash-merged chore commit, so the scope — not the type — is
-          // what has to trigger the release.
-          { type: 'chore', scope: 'sync', release: false },
-          { type: 'chore', scope: 'release', release: 'minor' },
-          { type: 'chore', scope: 'promote', release: 'minor' },
           { type: 'feat', release: 'minor' },
           { type: 'fix', release: 'patch' },
           { type: 'perf', release: 'patch' },
