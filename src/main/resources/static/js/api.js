@@ -170,6 +170,12 @@ async function apiClearCart() {
     });
 }
 
+// --- Version API ---
+
+async function apiGetVersion() {
+    return apiFetch('/version');
+}
+
 // --- Orders API ---
 
 async function apiCheckout() {

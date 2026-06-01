@@ -3,6 +3,9 @@ server:
   error:
     include-message: always
 
+app:
+  version: @project.version@
+
 spring:
   application:
     name: bookstore-api
