@@ -74,6 +74,11 @@ jobs:
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
           echo "Image version: $VERSION (released: ${{ steps.semrel.outputs.new_release_published }})"
 
+      # Build the JAR natively on the runner (fast, no emulation). The artifact
+      # is architecture-independent, so the multi-arch image below just copies it.
+      - name: Build application JAR
+        run: mvn -B clean package -DskipTests
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -99,8 +104,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./Dockerfile
-          platforms: linux/amd64
+          file: ./Dockerfile.runtime
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}

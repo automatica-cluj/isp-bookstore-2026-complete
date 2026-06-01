@@ -1,0 +1,28 @@
+# Runtime-only image used by CI to publish a fast multi-arch (amd64 + arm64) image.
+#
+# It copies a JAR that CI already built natively on the runner. A Spring Boot JAR
+# is Java bytecode and therefore architecture-independent, so the same artifact
+# works on every platform — and because this Dockerfile has no RUN step, buildx
+# can assemble both architectures without QEMU emulation (just pulls the per-arch
+# JRE base and adds the copy layer).
+#
+# For LOCAL development use the self-contained `Dockerfile` instead (it builds the
+# JAR in-image); `compose.dev.yml` already points at it.
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+
+ARG VERSION=dev
+ARG VCS_REF=unknown
+ARG BUILD_DATE=unknown
+
+LABEL org.opencontainers.image.title="ISP 2026 Bookstore"
+LABEL org.opencontainers.image.description="Spring Boot bookstore API for the ISP 2026 course"
+LABEL org.opencontainers.image.source="https://github.com/automatica-cluj/isp-bookstore-2026-complete"
+LABEL org.opencontainers.image.version="${VERSION}"
+LABEL org.opencontainers.image.revision="${VCS_REF}"
+LABEL org.opencontainers.image.created="${BUILD_DATE}"
+LABEL org.opencontainers.image.licenses="MIT"
+
+COPY target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
