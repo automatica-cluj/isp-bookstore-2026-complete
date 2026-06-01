@@ -51,7 +51,16 @@ function showFlash(message, type) {
 
 // --- Init ---
 
+function loadVersion() {
+    apiGetVersion()
+        .then(function (data) {
+            document.getElementById('app-version').textContent = 'v' + data.version;
+        })
+        .catch(function () { /* footer version is non-critical */ });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     updateNavBar();
     navigate('books');
+    loadVersion();
 });
