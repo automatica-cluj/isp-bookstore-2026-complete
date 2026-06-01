@@ -20,13 +20,14 @@ public class StatisticsController {
     }
 
     /**
-     * Count  books!!!!!
-     * @return
+     * Aggregate catalogue statistics: total number of books and the number of
+     * distinct tags across all books (deduplicated via {@code HashSet}).
      */
     @GetMapping
     public ResponseEntity<Map<String, Object>> getStatistics() {
         Map<String, Object> stats = new HashMap<>();
         stats.put("bookCount", bookService.countAll());
+        stats.put("tagCount", bookService.getAllTags().size());
         return ResponseEntity.ok(stats);
     }
 
