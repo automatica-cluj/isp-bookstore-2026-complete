@@ -42,7 +42,7 @@ Then open <http://localhost:8090>.
 
 ## Run with a published image (production-like)
 
-Images are published to GHCR on every push to `main`:
+Images are published to GHCR on every push to `main` as **multi-arch** (`linux/amd64` + `linux/arm64`), so they pull natively on both Intel and Apple Silicon:
 
 - `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:latest` — most recent `main`
 - `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:v1.2.3` — released version tag
