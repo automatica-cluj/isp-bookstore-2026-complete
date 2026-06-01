@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/automatica-cluj/isp-bookstore-2026-complete/actions/workflows/ci.yml/badge.svg)](https://github.com/automatica-cluj/isp-bookstore-2026-complete/actions/workflows/ci.yml)
 [![Build and Push](https://github.com/automatica-cluj/isp-bookstore-2026-complete/actions/workflows/build-push.yml/badge.svg)](https://github.com/automatica-cluj/isp-bookstore-2026-complete/actions/workflows/build-push.yml)
-[![Release](https://img.shields.io/github/v/release/automatica-cluj/isp-bookstore-2026-complete?include_prereleases&sort=semver)](https://github.com/automatica-cluj/isp-bookstore-2026-complete/releases)
+[![Release](https://img.shields.io/github/v/release/automatica-cluj/isp-bookstore-2026-complete?sort=semver)](https://github.com/automatica-cluj/isp-bookstore-2026-complete/releases)
 [![Image](https://img.shields.io/badge/ghcr.io-isp--bookstore--2026--complete-blue?logo=docker)](https://github.com/automatica-cluj/isp-bookstore-2026-complete/pkgs/container/isp-bookstore-2026-complete)
 
 Spring Boot bookstore API used as the reference application for the **Software Engineering (ISP) 2026** course at UTCN. A **Caddy** reverse proxy terminates TLS in front of the app, with automatic **Let's Encrypt** certificates when deployed behind a DuckDNS subdomain.
@@ -42,11 +42,10 @@ Then open <http://localhost:8090>.
 
 ## Run with a published image (production-like)
 
-Images are published to GHCR on every push to `main` / `develop`:
+Images are published to GHCR on every push to `main`:
 
 - `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:latest` — most recent `main`
-- `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:v1.2.3` — stable tag
-- `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:v1.3.0-beta.1` — prerelease from `develop`
+- `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:v1.2.3` — released version tag
 - `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:sha-abc1234` — any commit
 
 ```bash
@@ -90,14 +89,12 @@ Browse all tags: <https://github.com/automatica-cluj/isp-bookstore-2026-complete
 
 ## Release pipeline
 
-On every push to `main` or `develop`:
+This project is **trunk-based** — everything ships from `main`. On every push to `main`:
 
 1. **CI** (`ci.yml`) — compiles, runs tests, packages the JAR.
-2. **Build and Push** (`build-push.yml`):
-   - Dry-runs `semantic-release` to compute the next version from the commit history.
-   - Builds the Docker image with `VERSION` / `VCS_REF` / `BUILD_DATE` build args.
-   - Pushes to GHCR tagged with `vX.Y.Z`, `latest` (on `main`), `sha-<short>`, and the branch name.
-   - If a new version is due, runs `semantic-release` for real — updates `CHANGELOG.md`, bumps `pom.xml`, tags the commit, and publishes a GitHub Release.
+2. **Release and Publish** (`build-push.yml`):
+   - Runs `semantic-release` once. From the commit history it decides whether a new version is due (`feat:` → minor, `fix:`/`perf:`/`refactor:` → patch, breaking → major). If so it bumps `pom.xml`, updates `CHANGELOG.md`, tags `vX.Y.Z`, and publishes a GitHub Release.
+   - Builds the Docker image (with `VERSION` / `VCS_REF` / `BUILD_DATE` build args) and pushes to GHCR tagged with `latest`, `sha-<short>`, and `vX.Y.Z` when a release was cut.
 
 PR titles must follow [Conventional Commits](https://www.conventionalcommits.org/) — enforced by `.github/workflows/pr-title.yml`. See **[CONTRIBUTING.md](CONTRIBUTING.md)** for the cheat sheet and repo-settings checklist.
 

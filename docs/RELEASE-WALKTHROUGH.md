@@ -1,6 +1,6 @@
 # Release walkthrough — from GitHub UI
 
-End-to-end example: add a small feature entirely through the GitHub web UI (no local clone) and watch the automated release pipeline publish a **beta prerelease** and then a **stable release**.
+End-to-end example: add a small feature entirely through the GitHub web UI (no local clone) and watch the automated release pipeline cut a new version and publish the image.
 
 > **Prerequisites:** you already have Write access to the repository and the first-time maintainer checklist in `CONTRIBUTING.md` has been done.
 
@@ -8,7 +8,7 @@ End-to-end example: add a small feature entirely through the GitHub web UI (no l
 
 ## How the pipeline decides what to release
 
-The release is driven entirely by the **PR title** (because PRs are squash-merged, the PR title becomes the only commit message on `develop` / `main`). `semantic-release` reads that title:
+This project is **trunk-based**: everything ships from `main`. The release is driven entirely by the **PR title** (because PRs are squash-merged, the PR title becomes the only commit message on `main`). `semantic-release` reads that title:
 
 | PR title prefix                        | Effect on version           |
 | -------------------------------------- | --------------------------- |
@@ -17,10 +17,7 @@ The release is driven entirely by the **PR title** (because PRs are squash-merge
 | `feat!: ...` or `BREAKING CHANGE:` body | major bump (1.2.0 → 2.0.0)  |
 | `docs:` / `chore:` / `test:` / `ci:`   | **no release**              |
 
-Branch channels:
-
-- `develop` → **prerelease** `vX.Y.Z-beta.N` (channel `beta`)
-- `main` → **stable** `vX.Y.Z`
+There is no `develop` branch and no beta/prerelease channel — a single merge to `main` is the whole release.
 
 ---
 
@@ -37,12 +34,12 @@ The endpoint is public by default (the existing `SecurityConfig` already permits
 
 ---
 
-## Step 1 — Create a topic branch from `develop`
+## Step 1 — Create a topic branch from `main`
 
 1. On the repo page, click the **branch dropdown** (top-left of the file list).
 2. Type `feat/books-count` in the search box.
-3. Above the dropdown, switch **Source** to `develop`.
-4. Click **Create branch: feat/books-count from 'develop'**.
+3. Make sure **Source** is `main`.
+4. Click **Create branch: feat/books-count from 'main'**.
 
 You are now viewing the repo on the new branch.
 
@@ -88,9 +85,9 @@ You are now viewing the repo on the new branch.
 ## Step 4 — Open the Pull Request
 
 1. A yellow banner appears: **Compare & pull request**. Click it.
-   (Alternatively: **Pull requests** tab → **New pull request** → base: `develop`, compare: `feat/books-count`.)
+   (Alternatively: **Pull requests** tab → **New pull request** → base: `main`, compare: `feat/books-count`.)
 2. Fill in:
-   - **base:** `develop`, **compare:** `feat/books-count` (verify both!)
+   - **base:** `main`, **compare:** `feat/books-count` (verify both!)
    - **Title** — this matters, it drives the release:
      ```
      feat: add GET /api/books/count endpoint
@@ -109,7 +106,7 @@ Fix the title in-place if the second check fails — it re-runs automatically.
 
 ---
 
-## Step 5 — Squash-and-merge into `develop`
+## Step 5 — Squash-and-merge into `main`
 
 1. When both checks are green, click **Squash and merge**.
 2. **Verify the squash commit message matches the PR title** — `feat: add GET /api/books/count endpoint`. (Repo settings default this correctly.)
@@ -118,60 +115,32 @@ Fix the title in-place if the second check fails — it re-runs automatically.
 
 ### What happens automatically
 
-Open the **Actions** tab. The `Build and Push` workflow runs on `develop`:
+Open the **Actions** tab. The `Release and Publish` workflow runs on `main`:
 
-1. Dry-runs `semantic-release` to compute the next version.
-2. Builds the Docker image with that version.
-3. Pushes to GHCR:
-   - `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:v1.3.0-beta.1` (example)
-   - `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:develop`
-   - `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:sha-abc1234`
-4. Runs `semantic-release` for real:
+1. Runs `semantic-release` once. It reads the `feat:` commit, computes the next version (e.g. `1.3.0`), then:
    - Updates `CHANGELOG.md`
    - Bumps `<version>` in `pom.xml`
-   - Tags the commit `v1.3.0-beta.1`
-   - Publishes a **GitHub Release** marked as **Pre-release**
-   - Pushes the `chore(release): 1.3.0-beta.1 [skip ci]` commit back to `develop`
+   - Tags the commit `v1.3.0`
+   - Publishes a **GitHub Release**
+   - Pushes the `chore(release): 1.3.0 [skip ci]` commit back to `main`
+2. Builds the Docker image with that version and pushes to GHCR:
+   - `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:v1.3.0`
+   - `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:latest`
+   - `ghcr.io/automatica-cluj/isp-bookstore-2026-complete:sha-abc1234`
 
-Confirm on the **Releases** page: the new entry is there, flagged `Pre-release`.
-
----
-
-## Step 6 — Promote `develop` to `main` (cut the stable release)
-
-1. Go to **Pull requests** → **New pull request**.
-2. **base:** `main`, **compare:** `develop`.
-3. Title:
-   ```
-   chore(release): promote 1.3.0 to stable
-   ```
-   (Or repeat the feat headline — either works. `chore:` does not itself trigger a release, but the underlying `feat:` commits reaching `main` do.)
-4. **Create pull request** → wait for checks → **Merge pull request** (or **Create a merge commit** — **not** squash here, so individual feat/fix commits carry through to `main`).
-
-> Tip: if squash is the only option your repo allows, use a `feat:` title that summarizes the release. `semantic-release` will still compute the right bump.
-
-### What happens automatically on `main`
-
-The same `Build and Push` workflow runs and this time produces a **stable release**:
-
-- Git tag `v1.3.0`
-- GHCR tags: `v1.3.0`, `latest`, `sha-<short>`, `main`
-- **GitHub Release** (not prerelease)
-- `CHANGELOG.md` updated with the stable section
-- `pom.xml` bumped to `1.3.0`
-- Release commit: `chore(release): 1.3.0 [skip ci]`
+Confirm on the **Releases** page: the new `v1.3.0` entry is there.
 
 ---
 
-## Step 7 — Verify
+## Step 6 — Verify
 
 | Check | Where |
 | ----- | ----- |
-| Stable release exists | **Releases** page — latest entry `v1.3.0`, no "Pre-release" label |
+| Release exists | **Releases** page — latest entry `v1.3.0` |
 | Docker image published | <https://github.com/automatica-cluj/isp-bookstore-2026-complete/pkgs/container/isp-bookstore-2026-complete> — `v1.3.0` and `latest` tags present |
 | `CHANGELOG.md` updated | Repo root on `main` |
 | `pom.xml` version bumped | `<version>1.3.0</version>` on `main` |
-| README badges green | **CI**, **Build and Push**, and the **Release** badge shows `v1.3.0` |
+| README badges green | **CI**, **Release and Publish**, and the **Release** badge shows `v1.3.0` |
 
 ---
 
@@ -182,4 +151,3 @@ The same `Build and Push` workflow runs and this time produces a **stable releas
 - **Suppressing a release deliberately** — add the `no-release` scope: `feat(no-release): draft new endpoint`.
 - **Don't hand-edit `CHANGELOG.md` or `pom.xml` `<version>`** — `semantic-release` owns both; your edits will be overwritten on the next release commit.
 - **`[skip ci]` on the release commit is normal** — it prevents the release workflow from looping on its own commit. Don't add `[skip ci]` to your feature commits.
-- **Forgot to branch from `develop`?** — topic branches should come from `develop`. If you branched from `main`, rebase onto `develop` or recreate the branch; merging `main`-based work into `develop` can pull unreleased fixes into your PR diff.
