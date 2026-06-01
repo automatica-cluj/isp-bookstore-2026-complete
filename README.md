@@ -1,7 +1,7 @@
 # ISP 2026 Bookstore
 
 [![CI](https://github.com/automatica-cluj/isp-bookstore-2026-complete/actions/workflows/ci.yml/badge.svg)](https://github.com/automatica-cluj/isp-bookstore-2026-complete/actions/workflows/ci.yml)
-[![Build and Push](https://github.com/automatica-cluj/isp-bookstore-2026-complete/actions/workflows/build-push.yml/badge.svg)](https://github.com/automatica-cluj/isp-bookstore-2026-complete/actions/workflows/build-push.yml)
+[![Release and Publish](https://github.com/automatica-cluj/isp-bookstore-2026-complete/actions/workflows/build-push.yml/badge.svg)](https://github.com/automatica-cluj/isp-bookstore-2026-complete/actions/workflows/build-push.yml)
 [![Release](https://img.shields.io/github/v/release/automatica-cluj/isp-bookstore-2026-complete?sort=semver)](https://github.com/automatica-cluj/isp-bookstore-2026-complete/releases)
 [![Image](https://img.shields.io/badge/ghcr.io-isp--bookstore--2026--complete-blue?logo=docker)](https://github.com/automatica-cluj/isp-bookstore-2026-complete/pkgs/container/isp-bookstore-2026-complete)
 
