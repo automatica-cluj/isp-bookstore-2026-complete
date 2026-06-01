@@ -1,0 +1,6 @@
+# Build context for Dockerfile.runtime — it only needs the prebuilt JAR.
+# (The default .dockerignore excludes target/, which is correct for the
+# self-contained Dockerfile but would hide the JAR from this runtime build.
+# BuildKit uses this <dockerfile>.dockerignore in preference to .dockerignore.)
+*
+!target
