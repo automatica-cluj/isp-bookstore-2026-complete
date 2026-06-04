@@ -1,0 +1,191 @@
+<mxfile host="Electron" agent="Claude Code">
+  <diagram name="DevOps Release Flow" id="release-flow">
+    <mxGraphModel dx="1222" dy="837" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="1700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontColor=#1A1A1A;" value="ISP 2026 Bookstore — DevOps Release Flow (GitHub Actions · semantic-release · GHCR)" vertex="1">
+          <mxGeometry height="30" width="1020" x="40" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="laneDev" parent="1" style="swimlane;startSize=26;html=1;horizontal=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=13;verticalAlign=top;swimlaneFillColor=#ffffff;" value="1 · Feature branch (cut from main)" vertex="1">
+          <mxGeometry height="170" width="1020" x="40" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="devStart" parent="laneDev" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;" value="Developer" vertex="1">
+          <mxGeometry height="60" width="100" x="30" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="devBranch" parent="laneDev" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" value="Cut topic branch&#xa;from main, commit work" vertex="1">
+          <mxGeometry height="64" width="150" x="170" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="devPush" parent="laneDev" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;" value="Push branch /&#xa;open Pull Request → main" vertex="1">
+          <mxGeometry height="64" width="170" x="360" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="devNote" parent="laneDev" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#555555;fontStyle=2;" value="Trunk-based: main is the only long-lived branch.&#xa;Conventional Commits required." vertex="1">
+          <mxGeometry height="64" width="410" x="580" y="58" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="laneDev" source="devStart" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#6c8ebf;" target="devBranch">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="laneDev" source="devBranch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#6c8ebf;" target="devPush">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lanePR" parent="1" style="swimlane;startSize=26;html=1;horizontal=1;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=13;verticalAlign=top;swimlaneFillColor=#ffffff;" value="2 · Pull Request checks (run on every PR / push to any branch)" vertex="1">
+          <mxGeometry height="220" width="1020" x="40" y="265" as="geometry" />
+        </mxCell>
+        <mxCell id="prTitle" parent="lanePR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;align=center;" value="pr-title.yml&#xa;&#xa;Validate PR title is a&#xa;Conventional Commit&#xa;(feat / fix / docs / chore …)" vertex="1">
+          <mxGeometry height="100" width="200" x="40" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ciTest" parent="lanePR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;align=center;" value="ci.yml · Build and Test&#xa;&#xa;Java 17 · mvn clean compile&#xa;mvn test → JUnit reports&#xa;upload test-results artifact" vertex="1">
+          <mxGeometry height="100" width="220" x="290" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ciPkg" parent="lanePR" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;align=center;" value="ci.yml · Package JAR&#xa;&#xa;mvn clean package -DskipTests&#xa;upload bookstore-jar artifact" vertex="1">
+          <mxGeometry height="100" width="220" x="560" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="prGate" parent="lanePR" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=center;" value="All checks green?&#xa;Reviewer approves" vertex="1">
+          <mxGeometry height="90" width="150" x="830" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="prNote" parent="lanePR" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#555555;fontStyle=2;" value="These jobs are gating but never release or publish anything." vertex="1">
+          <mxGeometry height="20" width="740" x="40" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="merge" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=1;align=center;" value="Squash-merge PR → main&#xa;(PR title becomes the commit message semantic-release reads)" vertex="1">
+          <mxGeometry height="60" width="420" x="340" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="laneRel" parent="1" style="swimlane;startSize=26;html=1;horizontal=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=13;verticalAlign=top;swimlaneFillColor=#ffffff;" value="3 · Release and Publish — build-push.yml (triggered on push to main)" vertex="1">
+          <mxGeometry height="640" width="1020" x="40" y="650" as="geometry" />
+        </mxCell>
+        <mxCell id="semrel" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;align=center;fontStyle=1;" value="Run semantic-release&#xa;&#xa;Analyse commits since last tag" vertex="1">
+          <mxGeometry height="70" width="200" x="410" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="relDecide" parent="laneRel" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=center;" value="Release warranted?&#xa;feat→minor · fix/perf/refactor→patch&#xa;breaking→major&#xa;docs/chore/ci/test/build→no release" vertex="1">
+          <mxGeometry height="125" width="260" x="380" y="145" as="geometry" />
+        </mxCell>
+        <mxCell id="relBox" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8f5fc;strokeColor=#9673a6;dashed=1;" value="" vertex="1">
+          <mxGeometry height="290" width="370" x="40" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="relBoxLbl" parent="laneRel" style="text;html=1;align=left;verticalAlign=top;fontSize=11;fontStyle=1;fontColor=#9673a6;" value="On release (new_release_published = true)" vertex="1">
+          <mxGeometry height="20" width="350" x="70" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="relBump" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;align=center;" value="Bump &lt;version&gt; in pom.xml&#xa;(mvn versions:set)" vertex="1">
+          <mxGeometry height="40" width="310" x="70" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="relChlog" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;align=center;" value="Update CHANGELOG.md" vertex="1">
+          <mxGeometry height="40" width="310" x="70" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="relTag" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;align=center;" value="Create git tag vX.Y.Z&#xa;+ GitHub Release (notes)" vertex="1">
+          <mxGeometry height="40" width="310" x="70" y="445" as="geometry" />
+        </mxCell>
+        <mxCell id="relCommit" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;align=center;" value="Push commit&#xa;chore(release): X.Y.Z [skip ci]&#xa;(assets: CHANGELOG.md, pom.xml)" vertex="1">
+          <mxGeometry height="55" width="310" x="70" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="relNo" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#999999;align=center;" value="No release&#xa;&#xa;Version = current pom.xml.&#xa;Image still built &amp; pushed&#xa;(no v-tag).&#xa;[skip ci] commits do not&#xa;re-trigger this workflow." vertex="1">
+          <mxGeometry height="160" width="300" x="670" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="bpBox" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eef7ff;strokeColor=#3b78bf;dashed=1;" value="" vertex="1">
+          <mxGeometry height="310" width="230" x="430" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="bpBoxLbl" parent="laneRel" style="text;html=1;align=left;verticalAlign=top;fontSize=11;fontStyle=1;fontColor=#3b78bf;" value="Always (release or not)" vertex="1">
+          <mxGeometry height="20" width="210" x="440" y="305" as="geometry" />
+        </mxCell>
+        <mxCell id="bpJar" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#3b78bf;align=center;" value="mvn clean package -DskipTests&#xa;(build JAR on runner)" vertex="1">
+          <mxGeometry height="50" width="200" x="445" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="bpBuildx" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#3b78bf;align=center;" value="Docker Buildx&#xa;multi-arch: amd64 + arm64&#xa;(Dockerfile.runtime)" vertex="1">
+          <mxGeometry height="60" width="200" x="445" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="bpLogin" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#3b78bf;align=center;" value="Log in to GHCR&#xa;(GITHUB_TOKEN)" vertex="1">
+          <mxGeometry height="45" width="200" x="445" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="bpPush" parent="laneRel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#3b78bf;align=center;fontStyle=1;" value="Build &amp; push image tags:&#xa;• latest&#xa;• sha-&lt;short&gt;&#xa;• v&lt;version&gt; (only on release)" vertex="1">
+          <mxGeometry height="55" width="200" x="445" y="535" as="geometry" />
+        </mxCell>
+        <mxCell id="r1" edge="1" parent="laneRel" source="semrel" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#9673a6;" target="relDecide">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" edge="1" parent="laneRel" source="relDecide" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#82b366;fontColor=#82b366;fontStyle=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="relBump" value="yes">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="225" y="205" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r3" edge="1" parent="laneRel" source="relDecide" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#999999;fontColor=#999999;fontStyle=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="relNo" value="no">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="205" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r4" edge="1" parent="laneRel" source="relBump" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#9673a6;" target="relChlog">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r5" edge="1" parent="laneRel" source="relChlog" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#9673a6;" target="relTag">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r6" edge="1" parent="laneRel" source="relTag" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#9673a6;" target="relCommit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r7" edge="1" parent="laneRel" source="bpJar" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#3b78bf;" target="bpBuildx">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r8" edge="1" parent="laneRel" source="bpBuildx" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#3b78bf;" target="bpLogin">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r9" edge="1" parent="laneRel" source="bpLogin" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#3b78bf;" target="bpPush">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r10" edge="1" parent="laneRel" source="relCommit" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;fontColor=#d79b00;dashed=1;fontStyle=2;" target="bpPush" value="v&lt;version&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="528" />
+              <mxPoint x="420" y="563" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="r11" edge="1" parent="laneRel" source="relDecide" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#3b78bf;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="bpJar">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="laneDeploy" parent="1" style="swimlane;startSize=26;html=1;horizontal=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=13;verticalAlign=top;swimlaneFillColor=#ffffff;" value="4 · Registry &amp; Deployment" vertex="1">
+          <mxGeometry height="200" width="1020" x="40" y="1360" as="geometry" />
+        </mxCell>
+        <mxCell id="ghcr" parent="laneDeploy" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;fillColor=#ffffff;strokeColor=#b85450;align=center;fontStyle=1;" value="GHCR&#xa;ghcr.io/&lt;owner&gt;/isp-bookstore-2026-complete&#xa;&#xa;tags: latest · sha-&lt;short&gt; · vX.Y.Z" vertex="1">
+          <mxGeometry height="110" width="240" x="60" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="deployProd" parent="laneDeploy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;align=center;" value="Production host&#xa;&#xa;docker compose -f compose.prod.yml&#xa;--env-file .env up -d&#xa;(pulls published GHCR image)" vertex="1">
+          <mxGeometry height="110" width="280" x="400" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="caddy" parent="laneDeploy" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;align=center;" value="Caddy reverse proxy&#xa;TLS :443 → app:8090&#xa;+ PostgreSQL&#xa;(SPRING_PROFILES_ACTIVE=docker)" vertex="1">
+          <mxGeometry height="110" width="240" x="740" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="d1" edge="1" parent="laneDeploy" source="ghcr" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#b85450;" target="deployProd">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="d2" edge="1" parent="laneDeploy" source="deployProd" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#b85450;" target="caddy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x1" edge="1" parent="1" source="devPush" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#6c8ebf;exitX=0.5;exitY=1;entryX=0.2;entryY=0;" target="prTitle">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="x2" edge="1" parent="1" source="prGate" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#d79b00;fontColor=#d79b00;fontStyle=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="merge" value="approved &amp; green">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="945" y="510" />
+              <mxPoint x="550" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="x3" edge="1" parent="1" source="merge" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#9673a6;fontColor=#9673a6;fontStyle=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="semrel" value="push to main">
+          <mxGeometry relative="1" x="-0.4286" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="x4" edge="1" parent="1" source="bpPush" style="edgeStyle=orthogonalEdgeStyle;html=1;endArrow=block;strokeColor=#b85450;fontColor=#b85450;fontStyle=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="ghcr" value="docker push">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="585" y="1320" />
+              <mxPoint x="220" y="1320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
