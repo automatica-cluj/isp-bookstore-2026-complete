@@ -32,6 +32,9 @@ function navigate(page) {
         case 'create-author':
             loadAuthorForm();
             break;
+        case 'about':
+            content.innerHTML = renderAbout();
+            break;
         default:
             loadBooks();
     }
